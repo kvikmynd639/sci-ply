@@ -1,11 +1,13 @@
 "use client";
 import { useState } from 'react';
+import { useRouter } from 'next/navigation'; // Import useRouter
 import { supabase } from '@/supabase/supabaseClient';
 
 export default function Auth() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
+  const router = useRouter(); // Initialize useRouter
 
   const handleSignup = async () => {
     setError(null);
@@ -18,6 +20,7 @@ export default function Auth() {
       setError(error.message);
     } else {
       alert('Check your email for the confirmation link.');
+      router.push('/dashboard'); // Redirect to dashboard
     }
   };
 
@@ -32,6 +35,7 @@ export default function Auth() {
       setError(error.message);
     } else {
       alert('Logged in successfully!');
+      router.push('/dashboard'); // Redirect to dashboard
     }
   };
 
