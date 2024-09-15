@@ -13,7 +13,7 @@ export default function Home() {
         </div>
         <div className="flex gap-4">
           <Link href="/auth/login">Login</Link>
-          <Link href="/auth/signup">Sign up</Link>
+          <Link href="/auth/signup">Signup</Link>
         </div>
       </nav>
 

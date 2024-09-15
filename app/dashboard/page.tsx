@@ -96,7 +96,7 @@ export default function Dashboard() {
                 news.map((article, index) => (
                   <div
                     key={index}
-                    className="p-4 bg-gray-50 rounded-lg shadow-sm cursor-pointer hover:bg-gray-100 transition"
+                    className="p-4 bg-gray-50 rounded-lg shadow-sm cursor-pointer hover:bg-gray-100 transition border-[0.2px] border-slate-800"
                     onClick={() => window.open(article.url, '_blank')}
                   >
                     <h3 className="font-semibold">{article.title}</h3>

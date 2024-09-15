@@ -7,7 +7,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body>
-        <SessionProvider> {/* Wrap the app with the Supabase SessionProvider */}
+        <SessionProvider> 
           {children}
         </SessionProvider>
       </body>
