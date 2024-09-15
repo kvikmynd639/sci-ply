@@ -1,37 +1,8 @@
 "use client";
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { supabase } from '@/supabase/supabaseClient'; // Adjust path as needed
 import Link from 'next/link';
 
 export default function Home() {
-  const router = useRouter();
-
-  useEffect(() => {
-    // Check if the user is logged in
-    const checkUserSession = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-
-      if (session) {
-        // Redirect to the dashboard or feed if logged in
-        router.push('/dashboard');
-      }
-    };
-
-    checkUserSession();
-
-    // Listen for auth state changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (session) {
-        router.push('/dashboard');
-      }
-    });
-
-    // Cleanup the listener on component unmount
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, [router]);
+  
 
   return (
     <div className="min-h-screen p-8 pb-20 sm:p-20 flex flex-col items-center font-sans">
