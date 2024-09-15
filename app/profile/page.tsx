@@ -1,6 +1,7 @@
 // app/profile/page.tsx
-'use client'; // Mark this as a client component
-import { useAuth } from '@/hooks/useAuth';
+//'use client'; // Mark this as a client component
+
+{/*import { useAuth } from '@/hooks/useAuth';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/supabase/supabaseClient';
 
@@ -24,3 +25,4 @@ export default function Profile() {
     </div>
   );
 }
+*/}
