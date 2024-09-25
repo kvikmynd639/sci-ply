@@ -25,3 +25,14 @@ body {
     text-wrap: balance;
   }
 }
+
+@layer base {
+  @font-face {
+    font-family: 'Conthrax';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url(/fonts/conthrax-sb.woff) format('woff');
+  }
+  
+}

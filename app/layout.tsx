@@ -1,4 +1,3 @@
-// app/layout.tsx
 "use client"; // This is a client component
 import { SessionProvider } from '@/context/SessionProvider'; // Import the custom SessionProvider for Supabase
 import './globals.css';
