@@ -1,115 +1,201 @@
+// pages/dashboard.tsx
 "use client";
-import { useEffect, useState } from 'react';
-import { supabase } from '@/supabase/supabaseClient';
-import { fetchScienceNews } from '@/supabase/api/fetchNews'; // Import the API function
+import { useEffect, useState } from "react";
+import { fetchRecentPapers } from "@/api/semanticScholar";
+import { fetchScienceNews } from "@/api/gdelt";
+import {
+  FiHome,
+  FiUser,
+  FiMessageSquare,
+  FiSettings,
+  FiUsers,
+  FiThumbsUp,
+  FiMessageCircle,
+  FiShare2,
+} from "react-icons/fi";
+import Link from "next/link";
+import Sidebar from "@/components/Sidebar";
 
 export default function Dashboard() {
   const [user, setUser] = useState<any>(null);
-  const [posts, setPosts] = useState<any[]>([]);
-  const [peers, setPeers] = useState<any[]>([]);
-  const [news, setNews] = useState<any[]>([]); // For storing GDELT news articles
+  const [mlPapers, setMlPapers] = useState<any[]>([]);
+  const [news, setNews] = useState<any[]>([]);
+  const [selectedTopic, setSelectedTopic] = useState("machine learning");
+
+  const topics = [
+    "machine learning",
+    "quantum computing",
+    "genomics",
+    "environmental science",
+    "biotechnology",
+  ];
+
+  const samplePosts = [
+    {
+      id: 1,
+      user: { name: "Dr. Alice Johnson", avatar: "/avatar1.jpg" },
+      content: "Discovered a new molecule with unique properties for sustainable energy solutions!",
+      date: "2 hours ago",
+    },
+    {
+      id: 2,
+      user: { name: "Prof. Bob Smith", avatar: "/avatar2.jpg" },
+      content: "AI-driven algorithm identifies 10,000 new gene expressions linked to rare diseases.",
+      date: "5 hours ago",
+    },
+    {
+      id: 3,
+      user: { name: "Dr. Carol White", avatar: "/avatar3.jpg" },
+      content: "Scientists find a molecule that may self-repair under extreme conditions. Huge potential!",
+      date: "1 day ago",
+    },
+    {
+      id: 4,
+      user: { name: "Dr. Daniel Kim", avatar: "/avatar4.jpg" },
+      content: "Improved photosynthesis efficiency by 30%. This breakthrough could change agriculture.",
+      date: "3 days ago",
+    },
+  ];
 
   useEffect(() => {
     const fetchUserData = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      setUser(user);
+      setUser({ name: "Jane Doe", email: "user@example.com", avatar: "/user-avatar.jpg" });
     };
 
-    const fetchPosts = async () => {
-      const dummyPosts = [
-        { id: 1, content: "This is the first post!" },
-        { id: 2, content: "Here's another interesting post." },
-        { id: 3, content: "Check out this awesome discovery!" },
-      ];
-      setPosts(dummyPosts);
-    };
-
-    const fetchPeers = async () => {
-      const dummyPeers = [
-        { id: 1, name: "Dr. Jane Doe", field: "Astrophysics" },
-        { id: 2, name: "Prof. John Smith", field: "Quantum Mechanics" },
-      ];
-      setPeers(dummyPeers);
-    };
-
-    const loadNews = async () => {
-      const newsData = await fetchScienceNews(); // Call the API function
+    const loadAPIData = async () => {
+      const mlPapersData = await fetchRecentPapers(selectedTopic);
+      const newsData = await fetchScienceNews();
+      setMlPapers(mlPapersData);
       setNews(newsData);
     };
 
     fetchUserData();
-    fetchPosts();
-    fetchPeers();
-    loadNews(); // Fetch the news
-  }, []);
+    loadAPIData();
+  }, [selectedTopic]);
+
+  const handleTopicChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedTopic(event.target.value);
+  };
 
   return (
-    <div className="min-h-screen bg-gray-100 font-sans">
-      {/* Navbar */}
-      <nav className="w-full bg-white shadow-md p-4 flex justify-between items-center">
-        <div className="text-2xl font-bold">SciPly</div>
-        <div className="text-lg">{user ? `Welcome, ${user.email}` : "Welcome, Guest"}</div>
-      </nav>
+    <div className="min-h-screen flex flex-col md:flex-row bg-gray-50 text-gray-800">
+      {/* Left Sidebar */}
+      <Sidebar/>
 
       {/* Main Content */}
-      <div className="max-w-6xl mx-auto flex flex-col md:flex-row gap-8 p-8 mt-4">
-        {/* Left Side: Posts */}
-        <main className="flex-1 bg-white p-4 rounded-lg shadow-md">
-          <h2 className="text-2xl font-bold mb-4">Posts</h2>
-          <div className="space-y-4">
-            {posts.length > 0 ? (
-              posts.map((post) => (
-                <div key={post.id} className="p-4 bg-gray-50 rounded-lg shadow-sm">
-                  <p>{post.content}</p>
+      <main className="flex-1 flex flex-col space-y-6 p-6 md:p-8">
+        {/* Top Section with Topic Filter */}
+        <div className="bg-white p-6 rounded-lg shadow-lg">
+          <div className="flex flex-col sm:flex-row justify-between items-center">
+            <h2 className="text-2xl font-bold text-gray-800 mb-4 sm:mb-0">Featured Research</h2>
+            <div>
+              <label className="mr-2 font-semibold text-gray-600">Topic:</label>
+              <select
+                className="p-2 rounded border border-gray-300"
+                value={selectedTopic}
+                onChange={handleTopicChange}
+              >
+                {topics.map((topic) => (
+                  <option key={topic} value={topic}>
+                    {topic.charAt(0).toUpperCase() + topic.slice(1)}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+            {mlPapers.length > 0 ? (
+              mlPapers.map((paper, index) => (
+                <div
+                  key={index}
+                  className="bg-gray-50 p-4 rounded-lg shadow-md border border-gray-200 transition hover:shadow-lg"
+                >
+                  <h3 className="font-semibold text-lg text-gray-700">{paper.title}</h3>
+                  <p className="text-sm text-gray-500 mt-2">
+                    By: {paper.authors.map((author: any) => author.name).join(", ")}
+                  </p>
                 </div>
               ))
             ) : (
-              <p>No posts available.</p>
+              <p className="text-gray-600">No recent papers available.</p>
             )}
           </div>
-        </main>
+        </div>
 
-        {/* Right Side: Recommendations and News */}
-        <aside className="w-full md:w-1/3 bg-white p-4 rounded-lg shadow-md flex flex-col gap-8">
-          {/* Sci-Peer Recommendations */}
-          <div>
-            <h2 className="text-2xl font-bold mb-4">Sci-Peer Recommendations</h2>
-            <div className="space-y-4">
-              {peers.length > 0 ? (
-                peers.map((peer) => (
-                  <div key={peer.id} className="p-4 bg-gray-50 rounded-lg shadow-sm">
-                    <p className="font-semibold">{peer.name}</p>
-                    <p className="text-sm text-gray-600">{peer.field}</p>
-                  </div>
-                ))
-              ) : (
-                <p>No recommendations available.</p>
-              )}
-            </div>
-          </div>
+        {/* Feed Section with Social Media Style Posts */}
+        <div className="bg-white p-6 rounded-lg shadow-lg flex-1 overflow-auto">
+          <h2 className="text-2xl font-bold text-gray-800 mb-4">Latest Posts</h2>
+          <div className="space-y-4">
+          {samplePosts.map((post) => (
+              <div key={post.id} className="bg-gray-100 p-6 rounded-lg shadow-sm flex flex-col sm:flex-row items-start sm:items-center space-x-0 sm:space-x-4 space-y-4 sm:space-y-0">
+                {/* User Avatar */}
+                <img src={post.user.avatar} alt="User Avatar" className="w-12 h-12 rounded-full" />
 
-          {/* Science News */}
-          <div>
-            <h2 className="text-2xl font-bold mb-4">Latest Science News</h2>
-            <div className="space-y-4">
-              {news.length > 0 ? (
-                news.map((article, index) => (
-                  <div
-                    key={index}
-                    className="p-4 bg-gray-50 rounded-lg shadow-sm cursor-pointer hover:bg-gray-100 transition border-[0.2px] border-slate-800"
-                    onClick={() => window.open(article.url, '_blank')}
-                  >
-                    <h3 className="font-semibold">{article.title}</h3>
-                    <p className="text-sm text-gray-600">{article.source}</p>
+                {/* Post Content */}
+                <div className="flex-1">
+                  <div className="flex justify-between items-center">
+                    <div>
+                      <h3 className="font-semibold text-gray-800">{post.user.name}</h3>
+                      <p className="text-xs text-gray-500">{post.date}</p>
+                    </div>
                   </div>
-                ))
-              ) : (
-                <p>No news available.</p>
-              )}
-            </div>
+                  <p className="text-gray-700 mt-2">{post.content}</p>
+
+                  {/* Interaction Buttons */}
+                  <div className="flex mt-4 space-x-6 text-gray-600 text-sm">
+                    <button className="flex items-center gap-1 hover:text-teal-600">
+                      <FiThumbsUp /> Like
+                    </button>
+                    <button className="flex items-center gap-1 hover:text-teal-600">
+                      <FiMessageCircle /> Comment
+                    </button>
+                    <button className="flex items-center gap-1 hover:text-teal-600">
+                      <FiShare2 /> Share
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
-        </aside>
-      </div>
+        </div>
+      </main>
+
+      {/* Right Sidebar */}
+      <aside className="w-full md:w-64 lg:w-80 bg-white shadow-lg p-6 space-y-8">
+        {/* Latest Science News */}
+        <div>
+          <h2 className="text-xl font-bold text-gray-800 mb-4">Latest News</h2>
+          <div className="space-y-4">
+            {news.length > 0 ? (
+              news.map((article, index) => (
+                <div
+                  key={index}
+                  className="p-4 bg-gray-50 rounded-lg shadow-sm cursor-pointer hover:bg-gray-100 transition border border-gray-200"
+                  onClick={() => window.open(article.url, "_blank")}
+                >
+                  <h3 className="font-semibold text-gray-700">{article.title}</h3>
+                  <p className="text-sm text-gray-500">{article.source}</p>
+                </div>
+              ))
+            ) : (
+              <p className="text-gray-600">No news available.</p>
+            )}
+          </div>
+        </div>
+
+        {/* Recommendations */}
+        <div>
+          <h2 className="text-xl font-bold text-gray-800 mb-4">Recommendations</h2>
+          <div className="space-y-2">
+            <button className="bg-gradient-to-r from-teal-400 to-blue-500 text-white py-2 rounded-lg w-full">
+              Follow Quantum Physics
+            </button>
+            <button className="bg-gradient-to-r from-teal-400 to-blue-500 text-white py-2 rounded-lg w-full">
+              Follow AI Research
+            </button>
+          </div>
+        </div>
+      </aside>
     </div>
   );
 }
