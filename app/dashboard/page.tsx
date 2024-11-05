@@ -1,8 +1,8 @@
 // pages/dashboard.tsx
 "use client";
 import { useEffect, useState } from "react";
-import { fetchRecentPapers } from "@/api/semanticScholar";
-import { fetchScienceNews } from "@/api/gdelt";
+import { fetchRecentPapers } from "@/app/api/fetchRecentPapers/route";
+import { fetchScienceNews } from "@/app/api/fetchScienceNews/route";
 import {
   FiHome,
   FiUser,
