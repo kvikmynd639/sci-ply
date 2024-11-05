@@ -4,11 +4,16 @@ import Footer from "@/components/Footer";
 import Link from "next/link";
 import Image from "next/image";
 import { FiEye, FiActivity, FiShield, FiAward, FiMenu, FiX, FiHome, FiUser, FiMessageSquare, FiSettings } from "react-icons/fi";
-import { useState } from "react";
+import { useState, useEffect} from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
 
+  useEffect(() => {
+    AOS.init({ duration: 800 });
+  }, []);
   return (
     <div className="min-h-screen bg-black text-white w-full">
       {/* Navigation */}
@@ -112,11 +117,11 @@ export default function Home() {
         <div className="max-w-6xl mx-auto px-4 sm:px-8 text-center flex flex-col">
           <div className="mb-12">
             <span className="inline-block bg-gray-800 text-white px-4 py-1 rounded-md uppercase text-sm tracking-wide mb-4">Our Core Values</span>
-            <h2 className="text-4xl font-bold text-white">What We Believe</h2>
+            <h2 className="text-4xl font-bold text-white" data-aos="fade-up">What We Believe</h2>
           </div>
 
           {/* Core Value Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8" data-aos="fade-up">
             <div className="bg-[#1C2541] rounded-lg p-8 shadow-lg flex items-center">
               <div className="flex-shrink-0 bg-gray-700 rounded-lg w-12 h-12 flex items-center justify-center mr-6 text-white">
                 <FiAward size={24} />
@@ -142,9 +147,9 @@ export default function Home() {
       {/* Science Validation Section */}
 <section className="py-20 bg-gradient-to-r from-gray-900 to-black text-white mt-16">
   <div className="max-w-7xl mx-auto px-4 sm:px-8 text-center">
-    <h2 className="text-4xl font-extrabold text-white mb-12">Ensuring Scientific Integrity</h2>
+    <h2 className="text-4xl font-extrabold text-white mb-12" data-aos="fade-down">Ensuring Scientific Integrity</h2>
     
-    <div className="flex flex-col md:flex-row gap-8 items-center justify-between">
+    <div className="flex flex-col md:flex-row gap-8 items-center justify-between" data-aos="fade-up">
       {/* Central Illustration */}
       <div className="flex-1 flex justify-center mb-8 md:mb-0">
         <div className="w-3/4 h-3/4 bg-gradient-to-r from-teal-400 to-blue-600 p-1 rounded-full shadow-lg relative">
@@ -154,7 +159,7 @@ export default function Home() {
       </div>
 
       {/* Information Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full md:w-2/3">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full md:w-2/3" data-aos="fade-up">
         <div className="bg-gray-800 p-6 rounded-lg shadow-md transform transition-all hover:scale-105">
           <h3 className="text-xl font-semibold text-teal-300 mb-2">Verified Science</h3>
           <p className="text-gray-400">Only peer-reviewed, validated research makes it to the forefront. We uphold high standards to ensure trustworthy sources.</p>
@@ -182,11 +187,11 @@ export default function Home() {
 {/* GPT Assistant Section */}
 {/* GPT Assistant Section */}
 <section className="py-24 bg-gradient-to-b from-gray-800 to-black text-white">
-  <div className="max-w-7xl mx-auto px-4 sm:px-8 text-center">
+  <div className="max-w-7xl mx-auto px-4 sm:px-8 text-center" data-aos="fade-down">
     <h2 className="text-4xl font-extrabold text-white mb-12">Meet Your SciPly GPT Assistant</h2>
     <p className="text-lg text-gray-400 mb-16">Discover the most relevant research articles tailored to your needs, powered by a custom-trained AI on a vast library of scientific knowledge.</p>
 
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center" data-aos="fade-up">
       {/* Illustration & Assistant's Avatar */}
       <div className="relative">
         <div className="w-full h-full bg-gradient-to-r from-teal-500 to-blue-600 p-1 rounded-lg shadow-lg transform rotate-3 hover:rotate-0 transition-all duration-300">
@@ -220,10 +225,10 @@ export default function Home() {
 {/* Networking & SciPeer Teams Section */}
 <section className="py-24 bg-gradient-to-b from-black to-gray-900 text-white">
   <div className="max-w-7xl mx-auto px-4 sm:px-8 text-center">
-    <h2 className="text-4xl font-extrabold text-white mb-12">Networking & SciPeer Teams</h2>
-    <p className="text-lg text-gray-400 mb-16">Create your dream team, find scientific partners, and collaborate on exciting projects. The gateway to impactful research and opportunity is here.</p>
+    <h2 className="text-4xl font-extrabold text-white mb-12" data-aos="fade-down">Networking & SciPeer Teams</h2>
+    <p className="text-lg text-gray-400 mb-16" data-aos="fade-down">Create your dream team, find scientific partners, and collaborate on exciting projects. The gateway to impactful research and opportunity is here.</p>
 
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-start">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-start" data-aos="fade-up">
       {/* Team Building Card */}
       <div className="bg-gray-800 p-8 rounded-lg shadow-lg transform transition-all hover:scale-105">
         <div className="flex justify-center mb-6">
@@ -262,12 +267,12 @@ export default function Home() {
 
     <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
       {/* Left: Insight and Suggestion Image */}
-      <div className="flex justify-center">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/ChatGPT_logo.svg/1024px-ChatGPT_logo.svg.png" alt="GPT Insights" className="w-3/4 rounded-lg shadow-lg transform transition hover:scale-105" />
+      <div className="flex justify-center" data-aos="fade-up">
+        <img src="https://png.pngtree.com/png-vector/20240316/ourmid/pngtree-great-thinker-diagram-png-image_11986163.png" alt="GPT Insights" className="w-3/4 shadow-lg" />
       </div>
 
       {/* Right: Feature Highlights */}
-      <div className="space-y-8">
+      <div className="space-y-8" data-aos="fade-left">
         <div className="bg-gray-800 p-6 rounded-lg shadow-lg flex items-start gap-4">
           <span className="bg-teal-500 p-3 rounded-full text-white text-2xl">&#9881;</span>
           <div>
@@ -299,26 +304,26 @@ export default function Home() {
 {/* Hilbert's Hotel Section */}
 <section className="py-24 bg-gradient-to-b from-black to-gray-900 text-white">
   <div className="max-w-7xl mx-auto px-4 sm:px-8 text-center">
-    <h2 className="text-4xl font-extrabold text-white mb-8">SciPly is Hilbert's Hotel</h2>
+    <h2 className="text-4xl font-extrabold text-white mb-8" data-aos="fade-down">SciPly is Hilbert's Hotel</h2>
     <p className="text-lg text-gray-400 mb-16">Our doors are open to everyone, from hobbyists to seasoned professionals. Embrace the infinite possibilities of science while respecting our community's ethics and core values.</p>
 
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       {/* Inclusivity Card */}
-      <div className="bg-gray-800 p-6 rounded-lg shadow-lg hover:shadow-2xl transition duration-300">
+      <div className="bg-gray-800 p-6 rounded-lg shadow-lg hover:shadow-2xl transition duration-300" data-aos="zoom-in">
         <div className="text-5xl text-teal-400 mb-4">&#128101;</div>
         <h3 className="text-2xl font-semibold text-white mb-2">Inclusive Community</h3>
         <p className="text-gray-400">Join a diverse group of passionate individuals eager to share knowledge, regardless of experience level.</p>
       </div>
 
       {/* Ethics & Integrity Card */}
-      <div className="bg-gray-800 p-6 rounded-lg shadow-lg hover:shadow-2xl transition duration-300">
+      <div className="bg-gray-800 p-6 rounded-lg shadow-lg hover:shadow-2xl transition duration-300" data-aos="zoom-in">
         <div className="text-5xl text-purple-400 mb-4">&#9878;</div>
         <h3 className="text-2xl font-semibold text-white mb-2">Ethics & Integrity</h3>
         <p className="text-gray-400">Respect our ethical standards, maintain integrity in your work, and contribute responsibly to the scientific community.</p>
       </div>
 
       {/* Collaboration & Respect Card */}
-      <div className="bg-gray-800 p-6 rounded-lg shadow-lg hover:shadow-2xl transition duration-300">
+      <div className="bg-gray-800 p-6 rounded-lg shadow-lg hover:shadow-2xl transition duration-300" data-aos="zoom-in">
         <div className="text-5xl text-blue-400 mb-4">&#128588;</div>
         <h3 className="text-2xl font-semibold text-white mb-2">Collaboration & Respect</h3>
         <p className="text-gray-400">Engage with others respectfully, foster productive collaborations, and celebrate the diversity of thought that drives innovation.</p>
