@@ -272,7 +272,7 @@ export default function Home() {
       </div>
 
       {/* Right: Feature Highlights */}
-      <div className="space-y-8" data-aos="fade-left">
+      <div className="space-y-8" data-aos="fade-down">
         <div className="bg-gray-800 p-6 rounded-lg shadow-lg flex items-start gap-4">
           <span className="bg-teal-500 p-3 rounded-full text-white text-2xl">&#9881;</span>
           <div>
