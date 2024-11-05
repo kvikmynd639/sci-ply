@@ -1,8 +1,5 @@
-// pages/dashboard.tsx
 "use client";
 import { useEffect, useState } from "react";
-import { fetchRecentPapers } from "@/app/api/fetchRecentPapers/route";
-import { fetchScienceNews } from "@/app/api/fetchScienceNews/route";
 import {
   FiHome,
   FiUser,
@@ -37,24 +34,7 @@ export default function Dashboard() {
       content: "Discovered a new molecule with unique properties for sustainable energy solutions!",
       date: "2 hours ago",
     },
-    {
-      id: 2,
-      user: { name: "Prof. Bob Smith", avatar: "/avatar2.jpg" },
-      content: "AI-driven algorithm identifies 10,000 new gene expressions linked to rare diseases.",
-      date: "5 hours ago",
-    },
-    {
-      id: 3,
-      user: { name: "Dr. Carol White", avatar: "/avatar3.jpg" },
-      content: "Scientists find a molecule that may self-repair under extreme conditions. Huge potential!",
-      date: "1 day ago",
-    },
-    {
-      id: 4,
-      user: { name: "Dr. Daniel Kim", avatar: "/avatar4.jpg" },
-      content: "Improved photosynthesis efficiency by 30%. This breakthrough could change agriculture.",
-      date: "3 days ago",
-    },
+    // Additional sample posts...
   ];
 
   useEffect(() => {
@@ -63,8 +43,13 @@ export default function Dashboard() {
     };
 
     const loadAPIData = async () => {
-      const mlPapersData = await fetchRecentPapers(selectedTopic);
-      const newsData = await fetchScienceNews();
+      // Fetching from your API routes
+      const papersResponse = await fetch(`/api/fetchRecentPapers?topic=${selectedTopic}`);
+      const newsResponse = await fetch(`/api/fetchScienceNews`);
+
+      const mlPapersData = await papersResponse.json();
+      const newsData = await newsResponse.json();
+
       setMlPapers(mlPapersData);
       setNews(newsData);
     };
@@ -80,7 +65,7 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen flex flex-col md:flex-row bg-gray-50 text-gray-800">
       {/* Left Sidebar */}
-      <Sidebar/>
+      <Sidebar />
 
       {/* Main Content */}
       <main className="flex-1 flex flex-col space-y-6 p-6 md:p-8">
@@ -126,12 +111,9 @@ export default function Dashboard() {
         <div className="bg-white p-6 rounded-lg shadow-lg flex-1 overflow-auto">
           <h2 className="text-2xl font-bold text-gray-800 mb-4">Latest Posts</h2>
           <div className="space-y-4">
-          {samplePosts.map((post) => (
+            {samplePosts.map((post) => (
               <div key={post.id} className="bg-gray-100 p-6 rounded-lg shadow-sm flex flex-col sm:flex-row items-start sm:items-center space-x-0 sm:space-x-4 space-y-4 sm:space-y-0">
-                {/* User Avatar */}
                 <img src={post.user.avatar} alt="User Avatar" className="w-12 h-12 rounded-full" />
-
-                {/* Post Content */}
                 <div className="flex-1">
                   <div className="flex justify-between items-center">
                     <div>
@@ -140,8 +122,6 @@ export default function Dashboard() {
                     </div>
                   </div>
                   <p className="text-gray-700 mt-2">{post.content}</p>
-
-                  {/* Interaction Buttons */}
                   <div className="flex mt-4 space-x-6 text-gray-600 text-sm">
                     <button className="flex items-center gap-1 hover:text-teal-600">
                       <FiThumbsUp /> Like

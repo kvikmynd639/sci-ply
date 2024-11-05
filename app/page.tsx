@@ -22,7 +22,7 @@ export default function Home() {
 
         {/* Desktop Menu */}
         <div className="hidden md:flex gap-8 items-center">
-          <Link href="/" className="text-gray-300 hover:text-gray-100 transition-colors duration-200 tracking-wider">
+          <Link href="/dashboard" className="text-gray-300 hover:text-gray-100 transition-colors duration-200 tracking-wider">
             Dashboard
           </Link>
           <Link href="/profile" className="text-gray-300 hover:text-gray-100 transition-colors duration-200 tracking-wider">
